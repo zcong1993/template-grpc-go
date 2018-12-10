@@ -32,3 +32,7 @@ bin
 vendor
 
 coverage.txt
+
+dist
+
+.envc

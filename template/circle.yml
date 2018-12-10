@@ -3,17 +3,10 @@ jobs:
   build:
     docker:
       # CircleCI Go images available at: https://hub.docker.com/r/circleci/golang/
-      - image: circleci/golang:1.10
-
-    working_directory: /go/src/github.com/<%= username %>/<%= name %>
+      - image: circleci/golang:1.11
 
     steps:
       - checkout
-      - run:
-          name: get deps
-          command: |<% if (godep) { %>
-            make install<% } else { %>
-            go get -t -d -v ./...<% } %>
       - run:
           name: build
           command: make build
