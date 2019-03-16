@@ -4,7 +4,9 @@ generate:
 
 install:
 	@go get -v github.com/myitcv/gobin
-	@gobin github.com/golang/protobuf/protoc-gen-go@v1.2.0
+	@gobin github.com/golang/protobuf/protoc-gen-go@v1.2.0<% if (gateway) { %>
+	@gobin -m github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
+	@gobin -m github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger<% } %>
 .PHONY: install
 
 build:
