@@ -8,5 +8,5 @@ jobs:
     steps:
       - checkout
       - run:
-          name: build
-          command: make build
+          name: test
+          command: make test

@@ -4,11 +4,11 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"net"
+	"net"<% if (gateway) { %>
 	"net/http"
 	"os"
 
-	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"github.com/grpc-ecosystem/grpc-gateway/runtime"<% } %>
 	"<%= projectPath %>/pb"
 	"google.golang.org/grpc"
 )
@@ -21,7 +21,7 @@ func (service *HelloService) Echo(ctx context.Context, in *pb.Message) (*pb.Mess
 	fmt.Printf("recieve message: %+v\n", in)
 	return &pb.Message{Value: in.Value}, nil
 }
-
+<% if (gateway) { %>
 func runGatewayServer(rpcPort, port string) {
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
@@ -37,7 +37,7 @@ func runGatewayServer(rpcPort, port string) {
 	}
 
 	http.ListenAndServe(port, mux)
-}
+}<% } %>
 
 func runRpcServer(port string) {
 	ss := grpc.NewServer()
@@ -52,10 +52,10 @@ func runRpcServer(port string) {
 	}
 }
 
-func main() {
+func main() {<% if (gateway) {%>
 	if os.Getenv("GATEWAY") == "true" {
 		println("run gateway server on :9009")
 		go runGatewayServer(":1234", ":9009")
-	}
+	}<% } %>
 	runRpcServer(":1234")
 }

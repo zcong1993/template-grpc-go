@@ -1,3 +1,5 @@
+const spawn = require('cross-spawn')
+
 module.exports = {
   description: 'Scaffolding out a go lang rpc module.',
   prompts() {
@@ -43,14 +45,20 @@ module.exports = {
       },
       {
         name: 'website',
-        default(answers) {
-          return `https://github.com/${answers.username}`
+        default({ username }) {
+          return `https://github.com/${username}`
         },
         store: true
       },
       {
         name: 'test',
         message: 'Use a ci?',
+        type: 'confirm',
+        default: true
+      },
+      {
+        name: 'gateway',
+        message: 'With grpc gateway?',
         type: 'confirm',
         default: true
       }
@@ -62,7 +70,9 @@ module.exports = {
         type: 'add',
         files: '**',
         filters: {
-          'circle.yml': 'test'
+          'circle.yml': 'test',
+          'pb/pb.pb.gw.go': 'gateway',
+          'pb/pb.swagger.json': 'gateway'
         }
       },
       {
@@ -77,7 +87,11 @@ module.exports = {
     ]
   },
   async completed() {
-    await this.gitInit()
+    spawn.sync('chmod', ['+x', './build.sh'], {
+      stdio: 'ignore',
+      cwd: this.outDir
+    })
+    this.gitInit()
     this.showProjectTips()
   }
 }

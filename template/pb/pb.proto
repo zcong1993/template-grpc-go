@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package pb;
-
+<% if (gateway) { %>
 import "google/api/annotations.proto";
 
 service EchoService {
@@ -11,7 +11,11 @@ service EchoService {
             body: "*"
         };
     }
-}
+}<% } else { %>
+
+service EchoService {
+    rpc Echo(Message) returns (Message);
+}<% } %>
 
 message Message {
     string value = 1;

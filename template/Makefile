@@ -3,19 +3,13 @@ generate:
 .PHONY: generate
 
 install:
-	@go get -u -v github.com/golang/dep/cmd/dep
-	@dep ensure
+	@go get -v github.com/myitcv/gobin
+	@gobin github.com/golang/protobuf/protoc-gen-go@v1.2.0
+.PHONY: install
 
-build: generate
-	@echo "====> Build cli"
-	@go build -o ./bin/<%= name %> main.go
+build:
+	./build.sh
 .PHONY: build
-
-release:
-	@echo "====> Build and release"
-	@go get github.com/goreleaser/goreleaser
-	@goreleaser
-.PHONY: release
 
 test:
 	@go test ./...

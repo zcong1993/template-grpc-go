@@ -1,0 +1,18 @@
+{
+  "name": "sao-template-grpc-go",
+  "version": "0.0.0",
+  "description": "grpc template for go",
+  "repository": {
+    "url": "zcong1993/sao-template-grpc-go",
+    "type": "git"
+  },
+  "author": "zcong1993 <1005997919@qq.com> (github.com/zcong1993)",
+  "license": "MIT",
+  "files": [
+    "saofile.js",
+    "template"
+  ],
+  "dependencies": {
+    "cross-spawn": "^6.0.5"
+  }
+}
